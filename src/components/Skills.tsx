@@ -80,22 +80,22 @@ const skillCategories: SkillCategory[] = [
 ]
 
 const tools = [
-  { name: 'n8n' },
-  { name: 'Make.com' },
-  { name: 'Zapier' },
-  { name: 'Retell AI' },
-  { name: 'OpenAI' },
-  { name: 'Claude' },
-  { name: 'Groq' },
-  { name: 'LangChain' },
-  { name: 'Supabase' },
-  { name: 'GoHighLevel' },
-  { name: 'Python' },
-  { name: 'TypeScript' },
-  { name: 'React' },
-  { name: 'Docker' },
-  { name: 'GitHub Actions' },
-  { name: 'Selenium' },
+  { name: 'n8n', emoji: '⚡' },
+  { name: 'Make.com', emoji: '🔄' },
+  { name: 'Zapier', emoji: '⚙️' },
+  { name: 'Retell AI', emoji: '🎙️' },
+  { name: 'Vapi', emoji: '🗣️' },
+  { name: 'OpenAI', emoji: '🤖' },
+  { name: 'Claude', emoji: '🧠' },
+  { name: 'Groq', emoji: '⚡' },
+  { name: 'LangChain', emoji: '🔗' },
+  { name: 'Supabase', emoji: '🗄️' },
+  { name: 'GoHighLevel', emoji: '📈' },
+  { name: 'Python', emoji: '🐍' },
+  { name: 'Docker', emoji: '🐳' },
+  { name: 'GitHub Actions', emoji: '🚀' },
+  { name: 'Selenium', emoji: '🌐' },
+  { name: 'Midjourney', emoji: '🎨' },
 ]
 
 interface Certificate {
@@ -209,9 +209,10 @@ export default function Skills() {
                 {[...tools, ...tools].map((tool, index) => (
                   <div
                     key={`${tool.name}-${index}`}
-                    className="ticker-item px-4 py-2 bg-[#141414] border border-[#2a2a2a] rounded-full text-sm text-gray-300 hover:border-[#00ff88]/25 transition-colors whitespace-nowrap"
+                    className="ticker-item px-4 py-2 bg-[#141414] border border-[#2a2a2a] rounded-full text-sm text-gray-300 hover:border-[#00ff88]/25 transition-colors whitespace-nowrap flex items-center gap-2"
                   >
-                    {tool.name}
+                    <span className="text-lg">{tool.emoji}</span>
+                    <span>{tool.name}</span>
                   </div>
                 ))}
               </motion.div>

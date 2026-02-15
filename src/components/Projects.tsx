@@ -40,6 +40,15 @@ const projects: Project[] = [
       { label: 'Scenarios', value: '3' },
       { label: 'CRM Sync', value: 'Real-time' }
     ],
+    image: '/images/RateCut - Architecture Diagram.png',
+    images: [
+      '/images/RateCut - Architecture Diagram.png',
+      '/images/RateCut-Voice Engine.png',
+      '/images/RateCut-DB Reactivation.png',
+      '/images/RateCut-Get Contact Details.png',
+      '/images/RateCut-Make Phone Call From Retell.png',
+      '/images/RateCut-Post Call Analysis.png'
+    ],
     imagePlaceholder: 'RateCut Architecture Diagram - Voice Agent Flow',
     featured: true,
     features: [
@@ -94,6 +103,7 @@ const projects: Project[] = [
       { label: 'Alert Speed', value: '<24h' },
       { label: 'Materials', value: '25+' }
     ],
+    image: '/images/COOCockpit.PNG',
     images: ['/images/COOCockpit.PNG', '/images/COOCockpitProduction Planning .png'],
     imagePlaceholder: 'COO Cockpit Dashboard Screenshot',
     featured: true,
