@@ -1,4 +1,4 @@
-import { Terminal, Heart, ArrowUp, Linkedin, Github, Mail, ExternalLink } from 'lucide-react'
+import { Terminal, ArrowUp, Linkedin, Github, Mail, ExternalLink } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -63,15 +63,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Made with Love */}
-        <div className="mt-10 pt-8 border-t border-[#1a1a1a] text-center">
-          <p className="text-sm text-gray-500 flex items-center justify-center gap-1.5">
-            Built with <Heart className="w-4 h-4 text-[#ff6b35] fill-[#ff6b35]" /> using
-            <span className="text-[#00ff88]">React</span>,
-            <span className="text-[#00d9ff]">Three.js</span> &
-            <span className="text-[#ff6b35]">Framer Motion</span>
-          </p>
-        </div>
+        <div className="mt-10 pt-8 border-t border-[#1a1a1a]" />
       </div>
     </footer>
   )

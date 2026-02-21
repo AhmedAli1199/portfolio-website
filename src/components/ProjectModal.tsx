@@ -38,9 +38,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
       {/* Modal Content */}
       <motion.div
-        initial={{ scale: 0.8, y: 50 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.8, y: 50 }}
+        layoutId={`project-${project.id}`}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto bg-[#0f0f0f] rounded-2xl border-2 shadow-2xl"

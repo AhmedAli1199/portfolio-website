@@ -132,6 +132,11 @@ const projects: Project[] = [
       { label: 'Categories', value: '10+' },
       { label: 'Time Saved', value: '95%' }
     ],
+    image: '/images/FDSS-Website.png',
+    images: [
+      '/images/FDSS-Website.png',
+      '/images/FDSS-n8n workflow.png',
+    ],
     imagePlaceholder: 'M&A Hub Dashboard with AI Demo',
   },
   {
@@ -152,20 +157,26 @@ const projects: Project[] = [
     imagePlaceholder: 'Make.com Workflow + Before/After Images',
   },
   {
-    id: 'digital-survey',
-    title: 'Digital Survey Workflow',
-    subtitle: 'Industrial Estimation System',
-    description: 'Mobile-first field data collection app for industrial insulation jacket manufacturing, replacing a 3-year-old manual survey process. Features rules-based decision engine with auto-classification of jacket complexity based on asset type, dimensions, and site conditions.',
-    tech: ['React', 'TypeScript', 'PostgreSQL', 'Mobile-First'],
+    id: 'immigration-finder',
+    title: 'Immigration Finder AI',
+    subtitle: 'GHL + n8n Lead Intake Pipeline',
+    description: 'End-to-end immigration lead qualification system combining GoHighLevel CRM with an n8n AI pipeline. Intake forms feed into an automated assessment that classifies visa pathways, scores lead eligibility, and routes qualified prospects to the right attorney workflow.',
+    tech: ['GoHighLevel', 'n8n', 'AI Pipeline', 'CRM Automation'],
     icon: Workflow,
     iconColor: '#00d9ff',
     category: 'automation',
     stats: [
-      { label: 'Asset Types', value: '4+' },
-      { label: 'Calculations', value: 'Auto' },
-      { label: 'Platform', value: 'Mobile' }
+      { label: 'Lead Routes', value: 'Auto' },
+      { label: 'Pipeline', value: 'AI' },
+      { label: 'CRM', value: 'GHL' }
     ],
-    imagePlaceholder: 'Mobile App Survey Interface',
+    image: '/images/ImmigrationFinder-System Overview.png',
+    images: [
+      '/images/ImmigrationFinder-System Overview.png',
+      '/images/ImmigrationFinder-Lead Intake Form.png',
+      '/images/ImmigrationFinder-AI Pipeline GHL.png',
+    ],
+    imagePlaceholder: 'Immigration Finder System Overview',
   },
   {
     id: 'financial-analysis',
@@ -180,6 +191,10 @@ const projects: Project[] = [
       { label: 'Signals', value: '8' },
       { label: 'Sources', value: 'SEC+' },
       { label: 'Output', value: 'Scores' }
+    ],
+    image: '/images/Financial analysis n8n complete workflow.png',
+    images: [
+      '/images/Financial analysis n8n complete workflow.png',
     ],
     imagePlaceholder: 'Financial Analysis Dashboard',
   },
@@ -197,7 +212,6 @@ export default function Projects() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [activeCategory, setActiveCategory] = useState('all')
-  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set())
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [showSpark, setShowSpark] = useState(false)
   const [sparkColor, setSparkColor] = useState('#00ff88')
@@ -206,25 +220,10 @@ export default function Projects() {
     ? projects
     : projects.filter(p => p.category === activeCategory)
 
-  const toggleExpanded = (projectId: string) => {
-    setExpandedProjects(prev => {
-      const newSet = new Set(prev)
-      if (newSet.has(projectId)) {
-        newSet.delete(projectId)
-      } else {
-        newSet.add(projectId)
-      }
-      return newSet
-    })
-  }
-
   const handleProjectClick = (project: Project) => {
     if (project.features && project.features.length > 0) {
-      // Trigger spark animation
       setSparkColor(project.iconColor)
       setShowSpark(true)
-
-      // Show modal after spark animation
       setTimeout(() => {
         setSelectedProject(project)
         setShowSpark(false)
@@ -232,7 +231,6 @@ export default function Projects() {
     }
   }
 
-  // Prevent body scroll when modal is open
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = 'hidden'
@@ -245,7 +243,7 @@ export default function Projects() {
   }, [selectedProject])
 
   return (
-    <section id="projects" className="section-anchor relative py-40 md:py-48 bg-[#0a0a0a]">
+    <section id="projects" className="section-anchor relative py-32 md:py-48 bg-[#0a0a0a]">
       {/* Background Elements */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.08]" />
 
@@ -256,7 +254,7 @@ export default function Projects() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20 md:mb-24"
+          className="text-center mb-16 md:mb-24"
         >
           <span className="text-[#ff6b35] text-sm font-medium uppercase tracking-widest">
             Portfolio
@@ -276,13 +274,13 @@ export default function Projects() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-14"
+          className="flex flex-wrap justify-center gap-3 md:gap-4 mb-16 md:mb-24"
         >
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all ${
                 activeCategory === cat.id
                   ? 'bg-[#00ff88] text-[#0d0d0d]'
                   : 'bg-[#141414] text-gray-300/80 hover:text-white border border-[#2a2a2a] hover:border-[#00ff88]/25'
@@ -293,122 +291,145 @@ export default function Projects() {
           ))}
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10">
-          {filteredProjects.map((project, index) => {
-            const hasExpandedView = project.features && project.features.length > 0
-            const electricClass = hasExpandedView
-              ? project.iconColor === '#00ff88'
-                ? 'electric-glow-green'
-                : project.iconColor === '#ff6b35'
-                ? 'electric-glow-orange'
-                : 'electric-glow-cyan'
-              : ''
+        {/* Sticky Stacking Cards Container */}
+        <div className="relative w-full max-w-5xl mx-auto flex flex-col gap-8 md:gap-0">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => {
+              const hasExpandedView = project.features && project.features.length > 0;
+              
+              // Calculate dynamic top position for the sticky effect
+              // This ensures cards stack nicely on top of each other
+              const stickyTop = `calc(15vh + ${index * 30}px)`;
 
-            return (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 * index }}
-                onClick={() => hasExpandedView && handleProjectClick(project)}
-                className={`group relative h-full bg-[#141414] rounded-2xl overflow-hidden border border-[#2a2a2a] hover:border-[#00ff88]/25 transition-all card-hover flex flex-col ${electricClass}`}
-              >
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-4 right-4 z-10 px-2 py-1 bg-[#ff6b35]/20 border border-[#ff6b35]/50 rounded text-[#ff6b35] text-xs font-medium">
-                    {hasExpandedView ? 'Interactive ⚡' : 'Featured'}
-                  </div>
-                )}
-
-              {/* Image Area */}
-              <div className="relative h-52 overflow-hidden">
-                {project.image ? (
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                ) : (
-                  <div className="project-image-placeholder w-full h-full flex flex-col items-center justify-center gap-2 p-4">
-                    <project.icon className="w-12 h-12 opacity-30" style={{ color: project.iconColor }} />
-                    <span className="text-center text-xs">{project.imagePlaceholder}</span>
-                  </div>
-                )}
-                
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent" />
-                
-                {/* Icon Badge */}
-                <div 
-                  className="absolute bottom-4 left-4 p-2 rounded-lg"
-                  style={{ backgroundColor: `${project.iconColor}20`, border: `1px solid ${project.iconColor}40` }}
+              return (
+                <motion.div
+                  key={project.id}
+                  layoutId={`project-${project.id}`}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="md:sticky w-full"
+                  style={{ top: stickyTop, zIndex: index }}
                 >
-                  <project.icon className="w-5 h-5" style={{ color: project.iconColor }} />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-7 md:p-8 flex-1 flex flex-col">
-                <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                <p className="text-sm text-gray-500 mb-3">{project.subtitle}</p>
-                <div className="mb-5">
-                  <p className={`text-sm text-gray-400 leading-normal ${!expandedProjects.has(project.id) ? 'clamp-4' : ''}`}>
-                    {project.description}
-                  </p>
-                  {project.description.length > 180 && (
-                    <button
-                      onClick={() => toggleExpanded(project.id)}
-                      className="text-xs mt-2 font-medium transition-colors"
-                      style={{ color: project.iconColor }}
-                    >
-                      {expandedProjects.has(project.id) ? 'Read Less' : 'Read More'}
-                    </button>
-                  )}
-                </div>
-
-                {/* Stats */}
-                <div className="flex gap-5 mb-6">
-                  {project.stats.map((stat) => (
-                    <div key={stat.label} className="text-center">
-                      <div className="text-base font-bold mb-0.5" style={{ color: project.iconColor }}>
-                        {stat.value}
-                      </div>
-                      <div className="text-xs text-gray-500 leading-tight">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.slice(0, 4).map((tech) => (
-                    <span 
-                      key={tech}
-                      className="px-2.5 py-1 text-xs bg-[#1a1a1a] text-gray-300 rounded border border-[#2a2a2a]"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.tech.length > 4 && (
-                    <span className="px-2.5 py-1 text-xs bg-[#1a1a1a] text-gray-500 rounded border border-[#2a2a2a]">
-                      +{project.tech.length - 4}
-                    </span>
-                  )}
-                </div>
-
-                {/* Actions */}
-                <div className="mt-auto pt-4">
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center gap-1.5 text-sm text-[#00ff88] hover:underline"
+                  <div 
+                    className="w-full bg-[#141414] rounded-2xl md:rounded-3xl overflow-hidden border border-[#2a2a2a] shadow-2xl flex flex-col md:flex-row group transition-colors duration-500 hover:border-white/20"
+                    style={{ 
+                      boxShadow: `0 -10px 40px -20px ${project.iconColor}20`,
+                      // Slight scale down for cards underneath to create depth
+                      transform: `scale(${1 - (filteredProjects.length - 1 - index) * 0.02})`,
+                      transformOrigin: 'top center'
+                    }}
                   >
-                    Discuss this project <ChevronRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          )
-        })}
+                    {/* Image Section (Top on mobile, Left on desktop) */}
+                    <div className="w-full md:w-5/12 h-64 md:h-auto relative overflow-hidden shrink-0 bg-[#0a0a0a]">
+                      {project.image ? (
+                        <img 
+                          src={project.image} 
+                          alt={project.title}
+                          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6">
+                          <project.icon className="w-16 h-16 opacity-20" style={{ color: project.iconColor }} />
+                          <span className="text-center text-sm text-gray-500">{project.imagePlaceholder}</span>
+                        </div>
+                      )}
+                      
+                      {/* Gradients */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-[#141414]" />
+                      
+                      {/* Featured Badge */}
+                      {project.featured && (
+                        <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10 px-3 py-1.5 bg-[#ff6b35]/20 border border-[#ff6b35]/50 rounded-md text-[#ff6b35] text-xs font-bold tracking-wide uppercase backdrop-blur-md">
+                          {hasExpandedView ? 'Interactive ⚡' : 'Featured'}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="p-6 md:p-10 flex-1 flex flex-col justify-center relative">
+                      {/* Large Background Icon */}
+                      <project.icon 
+                        className="absolute right-10 bottom-10 w-48 h-48 opacity-[0.03] pointer-events-none transform -rotate-12" 
+                        style={{ color: project.iconColor }} 
+                      />
+
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div 
+                            className="p-2.5 rounded-xl backdrop-blur-sm"
+                            style={{ backgroundColor: `${project.iconColor}15`, border: `1px solid ${project.iconColor}30` }}
+                          >
+                            <project.icon className="w-5 h-5" style={{ color: project.iconColor }} />
+                          </div>
+                          <span className="text-xs font-mono text-gray-400 uppercase tracking-wider">
+                            {project.category.replace('-', ' ')}
+                          </span>
+                        </div>
+
+                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
+                        <p className="text-base md:text-lg text-gray-400 mb-6 font-medium">{project.subtitle}</p>
+                        
+                        <p className="text-sm md:text-base text-gray-500 leading-relaxed mb-8 max-w-2xl">
+                          {project.description}
+                        </p>
+
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-3 gap-4 mb-8">
+                          {project.stats.map((stat) => (
+                            <div key={stat.label} className="bg-[#0a0a0a] rounded-xl p-3 md:p-4 border border-[#2a2a2a]">
+                              <div className="text-lg md:text-xl font-bold mb-1" style={{ color: project.iconColor }}>
+                                {stat.value}
+                              </div>
+                              <div className="text-[10px] md:text-xs text-gray-500 uppercase tracking-wider font-medium">
+                                {stat.label}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mt-auto pt-6 border-t border-[#2a2a2a]">
+                          {/* Tech Stack */}
+                          <div className="flex flex-wrap gap-2">
+                            {project.tech.slice(0, 4).map((tech) => (
+                              <span 
+                                key={tech}
+                                className="px-2.5 py-1 text-xs bg-[#1a1a1a] text-gray-300 rounded-md border border-[#2a2a2a]"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                            {project.tech.length > 4 && (
+                              <span className="px-2.5 py-1 text-xs bg-[#1a1a1a] text-gray-500 rounded-md border border-[#2a2a2a]">
+                                +{project.tech.length - 4}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Action Button */}
+                          {hasExpandedView && (
+                            <button
+                              onClick={() => handleProjectClick(project)}
+                              className="group/btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 w-full md:w-auto shrink-0"
+                              style={{ 
+                                backgroundColor: `${project.iconColor}15`,
+                                color: project.iconColor,
+                                border: `1px solid ${project.iconColor}30`
+                              }}
+                            >
+                              <span>Initialize Briefing</span>
+                              <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </AnimatePresence>
         </div>
 
         {/* View More CTA */}
@@ -416,7 +437,7 @@ export default function Projects() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-16"
+          className="text-center mt-24 md:mt-32"
         >
           <a
             href="https://github.com/ahmedali1199"
